@@ -10,16 +10,21 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 var version = "1.0";
 
    chrome.webRequest.onBeforeSendHeaders.addListener(
-        function(details) {
+      function(details) {
           console.log("#############################");
           console.log(details.requestHeaders);
-          for (var i = 0; i < details.requestHeaders.length; ++i) {
-            console.log(details.requestHeaders[i].name);
-            if (details.requestHeaders[i].name === 'User-Agent') {
-              details.requestHeaders.splice(i, 1);
-              break;
-            }
+
+			
+			var extraHeader = { "name":"user", "value":"san" };
+			details.requestHeaders.push(extraHeader);
+          	for (var i = 0; i < details.requestHeaders.length; ++i) {
+            console.log(" Name :"+details.requestHeaders[i].name);
+             console.log(" value :"+details.requestHeaders[i].value);
+      
+   
           }
+
+          console.log(details.requestHeaders);
           return {requestHeaders: details.requestHeaders};
         },
         {urls: ["<all_urls>"]},
